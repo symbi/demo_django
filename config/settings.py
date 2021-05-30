@@ -32,7 +32,7 @@ STRIPE_SECRET_KEY = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.get_value('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fast-harbor-30811.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -164,7 +164,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 #collectstatic will copy the files from various folders into STATIC_ROOT.
 #Therefore, you cannot use the STATIC_ROOT folder in STATICFILES_DIRS.
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 MEDIA_URL = '/media/'
