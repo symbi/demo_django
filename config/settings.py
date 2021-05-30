@@ -29,13 +29,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '8jrj16b$8e1a6#q9m#9_n6kpbbe6@o-rrcm*uhz^r-i1_(^^g@'
-SECRET_KEY = env.get_value('SECRET_KEY')
+SECRET_KEY = '8jrj16b$8e1a6#q9m#9_n6kpbbe6@o-rrcm*uhz^r-i1_(^^g@'
+#SECRET_KEY = env.get_value('SECRET_KEY')
 STRIPE_SECRET_KEY = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.get_value('DEBUG')
-
+#DEBUG = env.get_value('DEBUG')
+DEBUG=True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fast-harbor-30811.herokuapp.com']
 
 INSTALLED_APPS = [
@@ -108,17 +108,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': env.get_value('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
+#         'NAME': env.get_value('DATABASE_DB', default=os.path.join(BASE_DIR, 'db.sqlite3')),
+#         'USER': env.get_value('DATABASE_USER', default='django_user'),
+#         'PASSWORD': env.get_value('DATABASE_PASSWORD', default='password'),
+#         'HOST': env.get_value('DATABASE_HOST', default='localhost'),
+#         'PORT': env.get_value('DATABASE_PORT', default='5432'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': env.get_value('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
-        'NAME': env.get_value('DATABASE_DB', default=os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': env.get_value('DATABASE_USER', default='django_user'),
-        'PASSWORD': env.get_value('DATABASE_PASSWORD', default='password'),
-        'HOST': env.get_value('DATABASE_HOST', default='localhost'),
-        'PORT': env.get_value('DATABASE_PORT', default='5432'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'ddt20v5kea1nh2',
+        'USER': 'pfqrqscprcwzce',
+        'PASSWORD': 'f47e646bc889e2cb7754307cfc7d975801175818a37b4f590dad2def290c8137',
+        'HOST': 'ec2-54-167-152-185.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 
 # Password validation
