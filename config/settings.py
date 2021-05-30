@@ -22,8 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 #GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
-GDAL_LIBRARY_PATH="/app/.heroku/vendor/lib/libgdal.so"
-GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib/libgeos_c.so"
+#GDAL_LIBRARY_PATH="/app/.heroku/vendor/lib/libgdal.so"
+#GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib/libgeos_c.so"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
