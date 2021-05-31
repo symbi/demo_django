@@ -4,4 +4,4 @@ from .models import User
 
 
 #UserAdmin.list_display += ('points',)
-#admin.site.register(User, UserAdmin)
+admin.site.register(User, UserAdmin)
