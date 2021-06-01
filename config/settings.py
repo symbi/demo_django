@@ -99,26 +99,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': env.get_value('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
-#         'NAME': env.get_value('DATABASE_DB', default=os.path.join(BASE_DIR, 'db.sqlite3')),
-#         'USER': env.get_value('DATABASE_USER', default='django_user'),
-#         'PASSWORD': env.get_value('DATABASE_PASSWORD', default='password'),
-#         'HOST': env.get_value('DATABASE_HOST', default='localhost'),
-#         'PORT': env.get_value('DATABASE_PORT', default='5432'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'ddt20v5kea1nh2',
-        'USER': 'pfqrqscprcwzce',
-        'PASSWORD': 'f47e646bc889e2cb7754307cfc7d975801175818a37b4f590dad2def290c8137',
-        'HOST': 'ec2-54-167-152-185.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': env.get_value('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': env.get_value('DATABASE_DB', default=os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': env.get_value('DATABASE_USER', default='django_user'),
+        'PASSWORD': env.get_value('DATABASE_PASSWORD', default='password'),
+        'HOST': env.get_value('DATABASE_HOST', default='localhost'),
+        'PORT': env.get_value('DATABASE_PORT', default='5432'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'ddt20v5kea1nh2',
+#         'USER': 'pfqrqscprcwzce',
+#         'PASSWORD': 'f47e646bc889e2cb7754307cfc7d975801175818a37b4f590dad2def290c8137',
+#         'HOST': 'ec2-54-167-152-185.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
