@@ -20,22 +20,19 @@ env.read_env('.env')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-#GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
-#GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
-#GDAL_LIBRARY_PATH="/app/.heroku/vendor/lib/libgdal.so"
-#GEOS_LIBRARY_PATH="/app/.heroku/vendor/lib/libgeos_c.so"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8jrj16b$8e1a6#q9m#9_n6kpbbe6@o-rrcm*uhz^r-i1_(^^g@'
-#SECRET_KEY = env.get_value('SECRET_KEY')
+#SECRET_KEY = '8jrj16b$8e1a6#q9m#9_n6kpbbe6@o-rrcm*uhz^r-i1_(^^g@'
+SECRET_KEY = env.get_value('SECRET_KEY')
 STRIPE_SECRET_KEY = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = env.get_value('DEBUG')
-DEBUG=True
+DEBUG = env.get_value('DEBUG')
+#DEBUG=True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fast-harbor-30811.herokuapp.com']
 
 INSTALLED_APPS = [
@@ -100,14 +97,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': env.get_value('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
@@ -160,6 +151,14 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.User'
+DJOSER = {
+    
+    'SERIALIZERS': {
+         'user_create': 'users.serializer.UserRegistrationSerializer'
+    }
+    
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -188,6 +187,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',  # <-- And here
+#     ],
+# }
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),

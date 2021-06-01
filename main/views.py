@@ -69,7 +69,7 @@ class testsList(APIView):
 class teamsList(APIView):
 
     def get(self, request, format=None):
-        print("testList user:",request.user)
+        print("teamsList user:",request.user)
         #last 30days?
         teams = Team.objects.all()
         serializer = TeamSerializer(teams, many=True)
