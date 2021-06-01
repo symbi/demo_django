@@ -206,5 +206,5 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://localhost',
-    'https://fast-harbor-30811.herokuapp.com'
+    'https://cryptic-temple-08567.herokuapp.com'
 ]
