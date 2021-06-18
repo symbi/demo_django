@@ -21,6 +21,24 @@ def save_serializer(serializer):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# vote_type could be 'upvote' or 'cancel_vote'
+def updateVote(user, target, target_type, action):
+    
+    if target_type=='poster':
+        upvoted_targets = user.upvoted_posts
+    if target_type=='comment':
+        upvoted_targets = user.upvoted_comments
+
+
+    upvoted_targets.remove(target)
+
+
+    #upvote or cancel
+    if action == 'upvote':
+        upvoted_targets.add(target)
+
+    target.update_points()
+    return target.points
 
 
 @api_view(['POST'])
@@ -103,7 +121,78 @@ def newPostView(request):
 
     #return Response("test done", status=status.HTTP_201_CREATED)
 
-class postersList(APIView):
+@api_view(['GET'])
+@authentication_classes([authentication.TokenAuthentication])
+def postersListView(request):
+    print("posterList user:",request.user)
+    print("current_user.is_authenticated:",request.user.is_authenticated)   
+    # #last 30days?
+    posters = Poster.objects.all()
+    serializer = PosterSerializer(posters, many=True)
+
+    for p in serializer.data:
+        p['upvoted'] = False
+        p['self_post'] = False 
+        if not request.user.is_authenticated:
+            pass
+        elif request.user.upvoted_posts.filter(id=p['id']).count() > 0:
+            p['upvoted'] = True  
+        elif request.user== p['user']:
+            p['self_post'] = True 
+
+        for c in p['comments']:
+            c['upvoted'] = False
+            c['self_post'] = False 
+            if not request.user.is_authenticated:
+                pass
+            elif request.user.upvoted_comments.filter(id=c['id']).count() > 0:
+                c['upvoted'] = True
+            elif request.user== c['user']:
+                c['self_post'] = True             
+
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def voteView(request, id):
+    current_user = request.user
+    if not current_user.is_authenticated:
+        return Response('Not logged in', status=status.HTTP_401_UNAUTHORIZED) 
+    # if current_user== target.user:
+    #     pass
+    #comment vote or post vote
+
+    target_type = request.data.get('vote_type', '')
+    target = None
+    if target_type=='poster':#todo if not found return msg
+        target = Poster.objects.get(pk=id)
+    if target_type=='comment':
+        target = Comment.objects.get(pk=id)
+    
+    if target==None:
+        return Response('item no more exist', status=status.HTTP_204_NO_CONTENT) 
+    action = request.data.get('action', '')
+    print('action:',action)
+
+    points = updateVote(current_user, target, target_type, action)
+
+    return Response({'action': action, 'points': points})
+
+
+
+
+
+
+# @api_view(['GET'])
+# @authentication_classes([authentication.TokenAuthentication])
+# def posterView(request, id):
+#     print("posterView user:",request.user)
+
+
+
+class postersList_del(APIView):
 
     def get(self, request, format=None):
         print("posterList user:",request.user)

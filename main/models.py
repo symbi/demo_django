@@ -22,11 +22,13 @@ def x_ago_helper(diff):
     return f'{diff.seconds // 3600} hours ago'
 
 def update_points_helper(obj):
-    upvotes = obj.upvoted_users.filter(is_shadow_banned=False).distinct().count()
-    downvotes = obj.downvoted_users.filter(is_shadow_banned=False).distinct().count()
-    downvotes += obj.downvoted_users.filter(is_staff=True).count()
-    obj.points = upvotes - downvotes
+    upvotes = obj.upvoted_users.distinct().count()
+    print("update_points_helper upvotes:",upvotes)
+    #downvotes = obj.downvoted_users.filter(is_shadow_banned=False).distinct().count()
+    #downvotes += obj.downvoted_users.filter(is_staff=True).count()
+    obj.points = upvotes
     obj.save()
+
 
 
 def x_ago(obj):
@@ -153,6 +155,8 @@ class Poster(models.Model):
             return 0
         else:
             return self.points
+    def get_absolute_url(self):
+        return f'/{self.id}/'
 
     def __str__(self):
         return self.body
@@ -173,7 +177,7 @@ class Comment(models.Model):
 
     @property
     def x_ago(self):
-        print("comment x_ago")
+        #print("comment x_ago")
         return x_ago(self)
         
     
@@ -193,6 +197,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
 
+# class testField(serializers.Field):
+#     def to_representation(self, value):
+#         return value.upvoted_posts
 
 class UserField(serializers.Field):
     def to_representation(self, value):
@@ -231,6 +238,7 @@ class PosterSerializer(serializers.ModelSerializer):
         model = Poster
         fields = (
         'x_ago',
+        'get_absolute_url',
         'id',
         'body', 
         'points',
