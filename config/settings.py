@@ -181,6 +181,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+CKEDITOR_UPLOAD_PATH = 'media/uploads/images/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -197,7 +198,7 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
 }
-
+#CORS_ALLOW_CREDENTIALS = True
 #CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',

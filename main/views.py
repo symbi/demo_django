@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404,HttpResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,6 +7,54 @@ from rest_framework import status, authentication, permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 from .models import Poster, PosterSerializer, Comment, CommentSerializer, Test, TestSerializer, Team, TeamSerializer
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+
+import os, time
+
+# Create your views here.
+
+@api_view(['DELETE'])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def profileDel(request,filename):
+    print("enter profileDel")
+    print('profileDel request:',request)
+    print("profileDel filename:",filename)
+    #print("MEDIA_URL in settings:",settings.MEDIA_URL)
+    print("CKEDITOR_UPLOAD_PATH in settings:",settings.CKEDITOR_UPLOAD_PATH+filename)
+    file_path=settings.CKEDITOR_UPLOAD_PATH+filename
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+        return Response({'removefile':filename}, status=status.HTTP_200_OK)
+    return Response({'removefile':filename}, status=status.HTTP_404_NOT_FOUND)
+
+@csrf_exempt
+def profile(request):
+    print("enter profile")
+    if request.method == 'POST':
+        #print('enter request.body:',request.body)
+        print('enter request:',request)
+        print('enter request time:',str(time.time()))
+        print('enter request.POST:',request.POST)
+        print('request.FILES:',request.FILES)
+        print('request.FILES upload:',request.FILES['upload'])
+  
+
+        #path = "media/uploads/images/"
+        
+        f = request.FILES["upload"]
+        file_path = settings.CKEDITOR_UPLOAD_PATH + '_' +str(time.time())+'_'+f.name
+        print("new file name:",file_path)
+        des_origin_f = open(file_path, "wb+")  
+        for chunk in f.chunks():
+            des_origin_f.write(chunk)
+        des_origin_f.close()
+        
+        return HttpResponse('{ "uploaded": true, "url": "http://127.0.0.1:8000/'+file_path+'"}')
+        
 
 def save_serializer(serializer):
     if serializer.is_valid():

@@ -4,6 +4,8 @@ from main import views
 
 urlpatterns = [
     path('posters/', views.postersListView),
+    path('uploads/images/', views.profile),
+    path('uploads/images/<str:filename>', views.profileDel),
     #path('posters/<int:id>', views.posterView),
     path('vote/<int:id>/', views.voteView),
     #path('comment/<int:id>/vote', commentVoteView),

@@ -29,6 +29,7 @@ urlpatterns = [
 	#path('',include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/v2/', include('users.urls')),
+    #path('ckeditor/', include('ckeditor_uploader.urls')),
  #    #path('sakura/', sakura),
     path('api/v1/', include('product.urls')),
     path('api/v1/', include('main.urls')),
